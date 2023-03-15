@@ -36,11 +36,11 @@ module will not be part of the standard library in 3.13.
   * Check the docstrings in the module, and extend them if they're not
     already useful
   * Add type hints to the code
-  * Add some badges in this README
-    * GitHub CI
-    * Coverage
-    * PyPI
-    * pepy.tech?
+  * ~~Add some badges in this README~~
+    * ~~GitHub CI~~
+    * ~~Coverage~~
+    * ~~PyPI~~
+    * ~~pepy.tech?~~
 * Tell someone about this; maybe get it added to the PEP?
 * Investigate the newer RFCs (1832/4506) and see if there's anything
   needs to be done to comply with them.
@@ -51,8 +51,8 @@ module will not be part of the standard library in 3.13.
   * Mentioned in
     [gh-83162](https://github.com/python/cpython/issues/83162), which
     seems to be dead, but the point is that the exception could be
-    renamed to something more descriptive.  I think ... thanks a bit
-    silly, since `xdrlib.Error` is kinda fine?
+    renamed to something more descriptive.  I think ... that's a bit
+    unnecessary, since `xdrlib.Error` is kinda fine?
 * Check for any CVEs
   * TBD
   * Can I subscribe for these?
