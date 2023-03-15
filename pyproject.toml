@@ -1,0 +1,25 @@
+[project]
+name = "py-xdrlib"
+version = "4.0.0"
+authors = [
+    { name = "David Arnold", email = "davida@pobox.com" },
+]
+description = "Encode or decode XDR (IETF RFC-4506/1832/1014)"
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/da4089/py-xdrlib"
+"Bug Tracker" = "https://github.com/da4089/py-xdrlib/issues"
+
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.module]
+name = "xdrlib"
