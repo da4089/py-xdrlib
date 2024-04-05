@@ -77,17 +77,15 @@ class Packer:
         if x: self.__buf.write(b'\0\0\0\1')
         else: self.__buf.write(b'\0\0\0\0')
 
-    def pack_uhyper(self, x):
-        try:
-            self.pack_uint(x>>32 & 0xffffffff)
-        except (TypeError, struct.error) as e:
-            raise ConversionError(e.args[0]) from None
-        try:
-            self.pack_uint(x & 0xffffffff)
-        except (TypeError, struct.error) as e:
-            raise ConversionError(e.args[0]) from None
+    @raise_conversion_error
+    def pack_uhyper(self, x: int):
+        """Pack a 64-bit unsigned integer value."""
+        self.__buf.write(struct.pack(">Q", x))
 
-    pack_hyper = pack_uhyper
+    @raise_conversion_error
+    def pack_hyper(self, x: int):
+        """Pack a 64-bit signed integer value."""
+        self.__buf.write(struct.pack(">q", x))
 
     @raise_conversion_error
     def pack_float(self, x):
@@ -178,16 +176,28 @@ class Unpacker:
     def unpack_bool(self):
         return bool(self.unpack_int())
 
-    def unpack_uhyper(self):
-        hi = self.unpack_uint()
-        lo = self.unpack_uint()
-        return int(hi)<<32 | lo
+    def unpack_uhyper(self) -> int:
+        """Decode a 64 bit unsigned integer value at the current position.
 
-    def unpack_hyper(self):
-        x = self.unpack_uhyper()
-        if x >= 0x8000000000000000:
-            x = x - 0x10000000000000000
-        return x
+        Advances the internal position by 8 octets."""
+        i = self.__pos
+        self.__pos = j = i + 8
+        data = self.__buf[i:j]
+        if len(data) < 8:
+            raise EOFError
+        return struct.unpack('>Q', data)[0]
+
+    def unpack_hyper(self) -> int:
+        """Decode a 64 bit signed integer value at the current position.
+
+        Advances the internal position by 8 octets."""
+        i = self.__pos
+        self.__pos = j = i + 8
+        data = self.__buf[i:j]
+        if len(data) < 8:
+            raise EOFError
+        return struct.unpack('>q', data)[0]
+
 
     def unpack_float(self):
         i = self.__pos
