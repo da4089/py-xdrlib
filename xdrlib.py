@@ -9,6 +9,10 @@ from io import BytesIO
 from functools import wraps
 import warnings
 
+# Package version
+__version__ = "4.0.2"
+
+
 __all__ = ["Error", "Packer", "Unpacker", "ConversionError"]
 
 # exceptions
