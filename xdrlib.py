@@ -8,7 +8,7 @@ from io import BytesIO
 from functools import wraps
 import struct
 import typing
-import warning
+import warnings
 
 # Package version
 __version__ = "4.0.2"
@@ -151,7 +151,7 @@ class Packer:
         if length < 0:
             raise ValueError(f"data size {length} must not "
                              "be negative")
-        elif len(data) < length:
+        if len(data) < length:
             raise ValueError(f"data size {len(data)} less than "
                              f"specified size {length}")
 
