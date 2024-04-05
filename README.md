@@ -29,18 +29,28 @@ module will not be part of the standard library in 3.13.
   * GitHub CI integration?
   * Based off current test code from 3.11
   * See if `flit` supports a test step
+  * coverage?
+* Formatting
+  * Black?
+* Lint
+  * pylint?
+  * flake8
 * Doc
   * Clean up the cloned doc's structure so it can stand alone
   * Push it to ... ReadTheDocs, I guess?
     * Can this be a part of the `flit publish` process too?
-  * Check the docstrings in the module, and extend them if they're not
-    already useful
-  * Add type hints to the code
+  * ~~Check the docstrings in the module, and extend them if they're not
+    already useful~~
+  * ~~Add type hints to the code~~
   * ~~Add some badges in this README~~
     * ~~GitHub CI~~
     * ~~Coverage~~
     * ~~PyPI~~
     * ~~pepy.tech?~~
+* Consider adding `rpcgen`-like tool to compile XDR IDL into classes
+  * IDL parser
+    * Need to add support for `struct` and `union`
+  * Code generator
 * Tell someone about this; maybe get it added to the PEP?
 * Investigate the newer RFCs (1832/4506) and see if there's anything
   needs to be done to comply with them.
