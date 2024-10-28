@@ -1,12 +1,12 @@
 [project]
 name = "py-xdrlib"
-version = "4.0.1"
+dynamic = ["version"]
 authors = [
     { name = "David Arnold", email = "davida@pobox.com" },
 ]
 description = "Encode or decode XDR (IETF RFC-4506/1832/1014)"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: Python Software Foundation License",
