@@ -1,7 +1,8 @@
 import unittest
-from test.support import warnings_helper
+import xdrlib
 
-xdrlib = warnings_helper.import_deprecated("xdrlib")
+if not hasattr(xdrlib, "__version__"):
+    raise ImportError("`import xdrlib` returned stdlib module")
 
 
 class XDRTest(unittest.TestCase):
