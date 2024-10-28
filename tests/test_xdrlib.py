@@ -10,8 +10,8 @@ class XDRTest(unittest.TestCase):
     def test_xdr(self):
         p = xdrlib.Packer()
 
-        s = b'hello world'
-        a = [b'what', b'is', b'hapnin', b'doctor']
+        s = b"hello world"
+        a = [b"what", b"is", b"hapnin", b"doctor"]
 
         p.pack_int(42)
         p.pack_int(-17)
@@ -53,6 +53,7 @@ class XDRTest(unittest.TestCase):
         up.done()
         self.assertRaises(EOFError, up.unpack_uint)
 
+
 class ConversionErrorTest(unittest.TestCase):
 
     def setUp(self):
@@ -62,19 +63,20 @@ class ConversionErrorTest(unittest.TestCase):
         self.assertRaises(xdrlib.ConversionError, *args)
 
     def test_pack_int(self):
-        self.assertRaisesConversion(self.packer.pack_int, 'string')
+        self.assertRaisesConversion(self.packer.pack_int, "string")
 
     def test_pack_uint(self):
-        self.assertRaisesConversion(self.packer.pack_uint, 'string')
+        self.assertRaisesConversion(self.packer.pack_uint, "string")
 
     def test_float(self):
-        self.assertRaisesConversion(self.packer.pack_float, 'string')
+        self.assertRaisesConversion(self.packer.pack_float, "string")
 
     def test_double(self):
-        self.assertRaisesConversion(self.packer.pack_double, 'string')
+        self.assertRaisesConversion(self.packer.pack_double, "string")
 
     def test_uhyper(self):
-        self.assertRaisesConversion(self.packer.pack_uhyper, 'string')
+        self.assertRaisesConversion(self.packer.pack_uhyper, "string")
+
 
 if __name__ == "__main__":
     unittest.main()

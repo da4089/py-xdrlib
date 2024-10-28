@@ -29,10 +29,13 @@ class Error(Exception):
         msg -- contains the message
 
     """
+
     def __init__(self, msg):
         self.msg = msg
+
     def __repr__(self):
         return repr(self.msg)
+
     def __str__(self):
         return str(self.msg)
 
@@ -42,7 +45,7 @@ class ConversionError(Error):
 
 
 def raise_conversion_error(function):
-    """ Wrap any raised struct.errors in a ConversionError. """
+    """Wrap any raised struct.errors in a ConversionError."""
 
     @wraps(function)
     def result(self, value):
@@ -50,6 +53,7 @@ def raise_conversion_error(function):
             return function(self, value)
         except struct.error as e:
             raise ConversionError(e.args[0]) from None
+
     return result
 
 
@@ -73,20 +77,22 @@ class Packer:
 
         This function is deprecated.  Use get_buffer() instead."""
 
-        warnings.warn("xdrlib.Packet.get_buf() is deprecated. Use get_buffer() instead",
-                      DeprecationWarning)
+        warnings.warn(
+            "xdrlib.Packet.get_buf() is deprecated. Use get_buffer() instead",
+            DeprecationWarning,
+        )
 
         return self.get_buffer()
 
     @raise_conversion_error
     def pack_uint(self, x: int):
         """Pack a 32-bit unsigned integer value."""
-        self.__buf.write(struct.pack('>L', x))
+        self.__buf.write(struct.pack(">L", x))
 
     @raise_conversion_error
     def pack_int(self, x: int):
         """Pack a 32-bit signed integer value."""
-        self.__buf.write(struct.pack('>l', x))
+        self.__buf.write(struct.pack(">l", x))
 
     def pack_enum(self, x: int):
         """Pack an enumeration value."""
@@ -95,9 +101,9 @@ class Packer:
     def pack_bool(self, x: typing.Any):
         """Pack a boolean value."""
         if x:
-            self.__buf.write(b'\0\0\0\1')
+            self.__buf.write(b"\0\0\0\1")
         else:
-            self.__buf.write(b'\0\0\0\0')
+            self.__buf.write(b"\0\0\0\0")
 
     @raise_conversion_error
     def pack_uhyper(self, x: int):
@@ -112,12 +118,12 @@ class Packer:
     @raise_conversion_error
     def pack_float(self, x: float):
         """Pack a 32-bit (single-precision) floating point value."""
-        self.__buf.write(struct.pack('>f', x))
+        self.__buf.write(struct.pack(">f", x))
 
     @raise_conversion_error
     def pack_double(self, x: float):
         """Pack a 64-bit (double-precision) floating point value."""
-        self.__buf.write(struct.pack('>d', x))
+        self.__buf.write(struct.pack(">d", x))
 
     def pack_fstring(self, length: int, data: bytes):
         """Pack a fixed-size string value.
@@ -149,15 +155,15 @@ class Packer:
         :param data: bytes value"""
 
         if length < 0:
-            raise ValueError(f"data size {length} must not "
-                             "be negative")
+            raise ValueError(f"data size {length} must not " "be negative")
         if len(data) < length:
-            raise ValueError(f"data size {len(data)} less than "
-                             f"specified size {length}")
+            raise ValueError(
+                f"data size {len(data)} less than " f"specified size {length}"
+            )
 
         data = data[:length]
         length = ((length + 3) // 4) * 4
-        data = data + (length - len(data)) * b'\0'
+        data = data + (length - len(data)) * b"\0"
         self.__buf.write(data)
 
     def pack_opaque(self, data: bytes):
@@ -195,10 +201,7 @@ class Packer:
         :param data: bytes value to pack."""
         self.pack_opaque(data)
 
-
-    def pack_list(self,
-                  seq: typing.Sequence,
-                  pack_item: typing.Callable):
+    def pack_list(self, seq: typing.Sequence, pack_item: typing.Callable):
         """Pack a list of items.
 
         :param seq: List of items to be packed
@@ -208,22 +211,20 @@ class Packer:
             pack_item(item)
         self.pack_uint(0)
 
-    def pack_farray(self, length: int,
-                    seq: typing.Sequence,
-                    pack_item: typing.Callable):
+    def pack_farray(
+        self, length: int, seq: typing.Sequence, pack_item: typing.Callable
+    ):
         """Pack a fixed-size array of items.
 
         :param length: Integer number of items
         :param seq: List of items to be packed
         :param pack_item: Function to use to pack items"""
         if len(seq) != length:
-            raise ValueError('wrong array size')
+            raise ValueError("wrong array size")
         for item in seq:
             pack_item(item)
 
-    def pack_array(self,
-                   seq: typing.Sequence,
-                   pack_item: typing.Callable):
+    def pack_array(self, seq: typing.Sequence, pack_item: typing.Callable):
         """Pack a variable-length array of items.
 
         :param seq: List of items to be packed
@@ -255,7 +256,8 @@ class Unpacker:
     def set_position(self, position: int):
         """Set the position within the decoding buffer.
 
-        :param position: Integer offset of next position to be decoded from the buffer."""
+        :param position: Integer offset of next position to be decoded from the buffer.
+        """
         self.__pos = position
 
     def get_buffer(self) -> bytes:
@@ -265,7 +267,7 @@ class Unpacker:
     def done(self):
         """Assert that the decoding is complete."""
         if self.__pos < len(self.__buf):
-            raise Error('unextracted data remains')
+            raise Error("unextracted data remains")
 
     def unpack_uint(self) -> int:
         """Decode a 32-bit unsigned integer value at the current position.
@@ -276,7 +278,7 @@ class Unpacker:
         data = self.__buf[i:j]
         if len(data) < 4:
             raise EOFError
-        return struct.unpack('>L', data)[0]
+        return struct.unpack(">L", data)[0]
 
     def unpack_int(self) -> int:
         """Decode a 32-bit signed integer value at the current position.
@@ -287,7 +289,7 @@ class Unpacker:
         data = self.__buf[i:j]
         if len(data) < 4:
             raise EOFError
-        return struct.unpack('>l', data)[0]
+        return struct.unpack(">l", data)[0]
 
     def unpack_enum(self) -> int:
         """Decode an enumeration value.
@@ -310,7 +312,7 @@ class Unpacker:
         data = self.__buf[i:j]
         if len(data) < 8:
             raise EOFError
-        return struct.unpack('>Q', data)[0]
+        return struct.unpack(">Q", data)[0]
 
     def unpack_hyper(self) -> int:
         """Decode a 64 bit signed integer value at the current position.
@@ -321,40 +323,40 @@ class Unpacker:
         data = self.__buf[i:j]
         if len(data) < 8:
             raise EOFError
-        return struct.unpack('>q', data)[0]
+        return struct.unpack(">q", data)[0]
 
     def unpack_float(self) -> float:
         """Decode a 32-bit (single precision) floating point value at the current position.
 
         Advances the internal position by 4 octets."""
         i = self.__pos
-        self.__pos = j = i+4
+        self.__pos = j = i + 4
         data = self.__buf[i:j]
         if len(data) < 4:
             raise EOFError
-        return struct.unpack('>f', data)[0]
+        return struct.unpack(">f", data)[0]
 
     def unpack_double(self) -> float:
         """Decode a 364-bit (double precision) floating point value at the current position.
 
         Advances the internal position by 4 octets."""
         i = self.__pos
-        self.__pos = j = i+8
+        self.__pos = j = i + 8
         data = self.__buf[i:j]
         if len(data) < 8:
             raise EOFError
-        return struct.unpack('>d', data)[0]
+        return struct.unpack(">d", data)[0]
 
     def unpack_fstring(self, n: int):
         """Decode a fixed-length string at the current position."""
         if n < 0:
-            raise ValueError('fstring size must be nonnegative')
+            raise ValueError("fstring size must be nonnegative")
         i = self.__pos
-        j = i + (n+3)//4*4
+        j = i + (n + 3) // 4 * 4
         if j > len(self.__buf):
             raise EOFError
         self.__pos = j
-        return self.__buf[i:i+n]
+        return self.__buf[i : i + n]
 
     unpack_fopaque = unpack_fstring
 
