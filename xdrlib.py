@@ -256,7 +256,8 @@ class Unpacker:
     def set_position(self, position: int):
         """Set the position within the decoding buffer.
 
-        :param position: Integer offset of next position to be decoded from the buffer.
+        :param position: Integer offset of next position to be decoded
+        from the buffer.
         """
         self.__pos = position
 
@@ -326,7 +327,8 @@ class Unpacker:
         return struct.unpack(">q", data)[0]
 
     def unpack_float(self) -> float:
-        """Decode a 32-bit (single precision) floating point value at the current position.
+        """Decode a 32-bit (single precision) floating point value at
+        the current position.
 
         Advances the internal position by 4 octets."""
         i = self.__pos
@@ -337,7 +339,8 @@ class Unpacker:
         return struct.unpack(">f", data)[0]
 
     def unpack_double(self) -> float:
-        """Decode a 364-bit (double precision) floating point value at the current position.
+        """Decode a 64-bit (double precision) floating point value at
+        the current position.
 
         Advances the internal position by 4 octets."""
         i = self.__pos
