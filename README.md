@@ -9,9 +9,9 @@
 [![PePY Monthly](https://pepy.tech/badge/py-xdrlib/month)](https://pepy.tech/project/py-xdrlib)
 
 This is a copy of the Python _xdrlib_ module, present in the standard
-library from release 1.4 to release 3.12.  It is intended that this
-module will be maintained with a compatible API and functionality for
-as long as it is possible and useful.
+library from release 1.4 to release 3.12.  This module will be maintained
+with a compatible API and functionality for as long as it is possible 
+and useful.
 
 ## Removal from Standard Library
 
@@ -20,13 +20,21 @@ removal of a number of less commonly used modules from the standard
 library.  The removal of _xdrlib_ was justified on the basis that it
 is rarely used other than for NFS at the time of writing in 2019.
 
-The last version of Python to support _xdrlib_ will be 3.12, and the
-module will not be part of the standard library in 3.13.
+The last version of Python to support _xdrlib_ was 3.12; the module is
+no longer part of the standard library in 3.13 and later.
+
+## Supported Python Versions
+
+This library supports the CPython versions supported by the Python
+Software Foundation, plus an additional year.
+
+Currently, that means that Python 3.8, moved to _end-of-life_ by the PSF
+on 2024-10-07, will be supported by `py-xdrlib` until 2025-10-07.
 
 ## Roadmap
 
 * Tests
-  * GitHub CI integration?
+  * GitHub CI integration
   * Based off current test code from 3.11
   * See if `flit` supports a test step
   * coverage?
@@ -51,7 +59,6 @@ module will not be part of the standard library in 3.13.
   * IDL parser
     * Need to add support for `struct` and `union`
   * Code generator
-* Tell someone about this; maybe get it added to the PEP?
 * Investigate the newer RFCs (1832/4506) and see if there's anything
   needs to be done to comply with them.
   * If so, and it can be done transparently, just do it.
@@ -63,14 +70,14 @@ module will not be part of the standard library in 3.13.
     seems to be dead, but the point is that the exception could be
     renamed to something more descriptive.  I think ... that's a bit
     unnecessary, since `xdrlib.Error` is kinda fine?
+  * Check Debian bug tracker, and maybe Arch?
 * Check for any CVEs
   * TBD
   * Can I subscribe for these?
-* Push out a 4.0.1 fairly soon, with better tests, better doc, and
-  otherwise unchanged functionality.  That would be enough for anyone
-  using the stdlib module to import this for 3.13 and their code would
-  work.
+* Push out a 4.0.x fairly soon, with better tests, better doc, and
+  otherwise unchanged functionality, maintaining functionality for those 
+  who need to use a single module with Python 3.8 through 3.13.
 
 ## Contributing
 
-Contributions are welcome.
+Contributions are very welcome!
