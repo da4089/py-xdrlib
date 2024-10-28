@@ -389,7 +389,7 @@ class Unpacker:
         :param n: Integer number of elements
         :param unpack_item: Function to decode items"""
         seq = []
-        for i in range(n):
+        for _ in range(n):
             seq.append(unpack_item())
         return seq
 
