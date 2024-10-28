@@ -1,0 +1,7 @@
+black
+build
+coverage
+flake8
+Flake8-pyproject
+pylint
+twine
