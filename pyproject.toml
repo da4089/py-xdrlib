@@ -23,3 +23,10 @@ build-backend = "flit_core.buildapi"
 
 [tool.flit.module]
 name = "xdrlib"
+
+[tool.flake8]
+max-line-length = "88"
+extend-ignore = ["E203", "E701"]
+
+[tool.pylint.format]
+max-line-length = "88"
